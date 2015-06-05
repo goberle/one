@@ -41,13 +41,13 @@ class VLANTagDriver < VNMMAD::VLANDriver
     ############################################################################
     # This function creates and activate a VLAN device
     ############################################################################
-    def create_vlan_dev(options)
-        mtu = options[:mtu] ? "mtu #{options[:mtu]}" : ""
+    def create_vlan_dev
+        mtu = @nic[:mtu] ? "mtu #{@nic[:mtu]}" : ""
 
         OpenNebula.exec_and_log("#{command(:ip)} link add link"\
-            " #{options[:phydev]} name #{options[:vlan_dev]} #{mtu} type vlan id"\
-            " #{options[:vlan_id]}")
+            " #{@nic[:phydev]} name #{@nic[:vlan_dev]} #{mtu} type vlan id"\
+            " #{@nic[:vlan_id]}")
 
-        OpenNebula.exec_and_log("#{command(:ip)} link set #{options[:vlan_dev]} up")
+        OpenNebula.exec_and_log("#{command(:ip)} link set #{@nic[:vlan_dev]} up")
     end
 end
